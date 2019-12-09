@@ -96,10 +96,35 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+
+    let result = [];
+    _.each(collection, function(element) {
+      if (!test(element)) {
+        result.push(element);
+      }
+    });
+    return result;
+
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    let result = [];
+    let uniqResult = [];
+    if (isSorted) {
+      // look at next element, and if the same ignore, else add to result
+      for (let i = 0; i < array.length; i++) {
+        if (iterator !== undefined) {
+          // uniqResult.push(iterator[array[i]]);
+          if (!uniqResult.includes(iterator[array[i]]) {
+            uniqResult.push(iterator[array[i]]);
+            result.push(array[i]);
+          }
+        }
+
+      }
+    }
+    return result;
   };
 
 
@@ -151,6 +176,7 @@
   _.reduce = function(collection, iterator, accumulator) {
   };
 
+  //End of part 1
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
