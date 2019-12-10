@@ -303,6 +303,17 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    let previousCalls = {};
+
+    return function () {
+      var stringArgs = JSON.stringify(arguments);
+      if (previousCalls[stringArgs] !== undefined) {
+        return previousCalls[stringArgs];
+      } else {
+        previousCalls[stringArgs] = func(...arguments);
+        return previousCalls[stringArgs];
+      };
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
