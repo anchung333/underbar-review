@@ -112,16 +112,29 @@
     let result = [];
     let uniqResult = [];
     if (isSorted) {
-      // look at next element, and if the same ignore, else add to result
-      for (let i = 0; i < array.length; i++) {
+      result.push(array[0]);
+      if (iterator !== undefined) {
+        uniqResult.push(iterator[array[0]]);
+      }
+       // look at next element, and if the same ignore, else add to result
+      //[1, 2, 2, 3, 4, 4];
+      for (let i = 1; i < array.length; i++) {
         if (iterator !== undefined) {
-          // uniqResult.push(iterator[array[i]]);
-          if (!uniqResult.includes(iterator[array[i]]) {
-            uniqResult.push(iterator[array[i]]);
+          if (uniqResult[uniqResult.length - 1] !== iterator(array[i])) {
+            uniqResult.push(iterator(array[i]));
             result.push(array[i]);
           }
+        } else {
+          if (array[i-1] !== array[i]) {
+          result.push(array[i]);
+          }
         }
-
+      }
+    } else {
+      for (let i = 0; i < array.length; i++) {
+        if (!result.includes(array[i])) {
+          result.push(array[i]);
+        }
       }
     }
     return result;
@@ -133,6 +146,11 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+    let result = [];
+    _.each(collection, function(element) {
+      result.push(iterator(element));
+    });
+    return result;
   };
 
   /*
